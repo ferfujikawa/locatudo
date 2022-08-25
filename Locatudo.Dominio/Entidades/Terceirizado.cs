@@ -1,0 +1,14 @@
+﻿using Locatudo.Dominio.ObjetosDeValor;
+
+namespace Locatudo.Dominio.Entidades
+{
+    public class Terceirizado : Pessoa
+    {
+        public Terceirizado(NomePessoaFisica nome, Email email, NomePessoaJuridica empresa) : base(nome, email)
+        {
+            Empresa = empresa;
+        }
+
+        public NomePessoaJuridica Empresa { get; private set; }
+    }
+}
