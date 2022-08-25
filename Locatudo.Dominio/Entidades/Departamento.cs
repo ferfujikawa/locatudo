@@ -5,7 +5,7 @@ namespace Locatudo.Dominio.Entidades
 {
     public class Departamento : EntidadeAbstrata
     {
-        public Departamento(string nome, Email email)
+        public Departamento(string nome, Email email) : base()
         {
             Nome = nome;
             Email = email;
