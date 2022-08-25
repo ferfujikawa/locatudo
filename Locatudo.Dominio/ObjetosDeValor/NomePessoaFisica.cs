@@ -1,8 +1,8 @@
 ﻿namespace Locatudo.Dominio.ObjetosDeValor
 {
-    public class Nome
+    public class NomePessoaFisica
     {
-        public Nome(string primeiroNome, string sobrenome)
+        public NomePessoaFisica(string primeiroNome, string sobrenome)
         {
             PrimeiroNome = primeiroNome;
             Sobrenome = sobrenome;
