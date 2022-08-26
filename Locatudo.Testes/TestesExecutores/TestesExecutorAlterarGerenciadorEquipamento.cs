@@ -24,7 +24,7 @@ namespace Locatudo.Testes.TestesExecutores
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(false, ex.Message);
+                Assert.Fail(ex.Message);
                 return;
             }
             Assert.IsTrue(true);
@@ -47,7 +47,7 @@ namespace Locatudo.Testes.TestesExecutores
                 Assert.IsTrue(true);
                 return;
             }
-            Assert.IsTrue(false);
+            Assert.Fail();
         }
 
         [TestMethod]
@@ -67,7 +67,7 @@ namespace Locatudo.Testes.TestesExecutores
                 Assert.IsTrue(true);
                 return;
             }
-            Assert.IsTrue(false);
+            Assert.Fail();
         }
     }
 }
