@@ -5,6 +5,12 @@ namespace Locatudo.Testes.Repositorios
 {
     public class RepositorioEquipamentoFalso : IRepositorioEquipamento
     {
+        private readonly Guid _idValido = Guid.NewGuid();
+
+        public RepositorioEquipamentoFalso(Guid idValido)
+        {
+            _idValido = idValido;
+        }
         public void Alterar(Equipamento entidade)
         {
             
@@ -27,6 +33,9 @@ namespace Locatudo.Testes.Repositorios
 
         public Equipamento? ObterPorId(Guid id)
         {
+            if (id != _idValido)
+                return null;
+
             return new Equipamento("Equipamento teste");
         }
     }

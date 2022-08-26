@@ -6,6 +6,13 @@ namespace Locatudo.Testes.Repositorios
 {
     public class RepositorioDepartamentoFalso : IRepositorioDepartamento
     {
+        private readonly Guid _idValido = Guid.NewGuid();
+
+        public RepositorioDepartamentoFalso(Guid idValido)
+        {
+            _idValido = idValido;
+        }
+
         public void Alterar(Departamento entidade)
         {
             
@@ -28,6 +35,9 @@ namespace Locatudo.Testes.Repositorios
 
         public Departamento? ObterPorId(Guid id)
         {
+            if (id != _idValido)
+                return null;
+
             var email = new Email("departamento.teste@provedor.com");
             return new Departamento("Departamento Teste", email);
         }
