@@ -32,7 +32,7 @@ namespace Locatudo.Dominio.Entidades
         }
         public bool Reprovar(Funcionario aprovador)
         {
-            if (Situacao.Valor != ESituacaoLocacao.Solicitado)
+            if (Situacao.Valor == ESituacaoLocacao.Solicitado)
             {
                 Situacao = new SituacaoLocacao(ESituacaoLocacao.Reprovado);
                 Aprovador = aprovador;
