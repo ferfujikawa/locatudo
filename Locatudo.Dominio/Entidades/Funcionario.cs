@@ -2,7 +2,7 @@
 
 namespace Locatudo.Dominio.Entidades
 {
-    public class Funcionario : Pessoa
+    public class Funcionario : Usuario
     {
         public Funcionario(NomePessoaFisica nome, Email email, Departamento lotacao) : base(nome, email)
         {

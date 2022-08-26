@@ -3,9 +3,9 @@ using Locatudo.Dominio.ObjetosDeValor;
 
 namespace Locatudo.Dominio.Entidades
 {
-    public class Pessoa : EntidadeAbstrata
+    public class Usuario : EntidadeAbstrata
     {
-        public Pessoa(NomePessoaFisica nome, Email email) : base()
+        public Usuario(NomePessoaFisica nome, Email email) : base()
         {
             Nome = nome;
             Email = email;
