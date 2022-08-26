@@ -4,13 +4,12 @@ namespace Locatudo.Dominio.Entidades
 {
     public class Equipamento : EntidadeAbstrata
     {
-        public Equipamento(string nome, Departamento departamentoResponsavel) : base()
+        public Equipamento(string nome) : base()
         {
             Nome = nome;
-            DepartamentoResponsavel = departamentoResponsavel;
         }
 
         public string Nome { get; private set; }
-        public Departamento DepartamentoResponsavel { get; private set; }
+        public Departamento? DepartamentoResponsavel { get; private set; }
     }
 }
