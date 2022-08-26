@@ -5,19 +5,13 @@ using Locatudo.Testes.Repositorios;
 namespace Locatudo.Testes.TestesExecutores
 {
     [TestClass]
-    public class TestesExecutorAlterarGerenciadorEquipamento
+    public class TestesExecutorCadastrarEquipamento
     {
-        private readonly Guid _idEquipamentoValido = Guid.NewGuid();
-        private readonly Guid _idDepartamentoValido = Guid.NewGuid();
-
         [TestMethod]
-        public void Comando_valido_deve_alterar_gerenciador_equipamento()
+        public void Comando_valido_deve_cadastrar_equipamento()
         {
-            var comandoValido = new ComandoAlterarGerenciadorEquipamento(_idEquipamentoValido, _idDepartamentoValido);
-            var executor = new ExecutorAlterarGerenciadorEquipamento(
-                new RepositorioEquipamentoFalso(_idEquipamentoValido),
-                new RepositorioDepartamentoFalso(_idDepartamentoValido)
-                );
+            var comandoValido = new ComandoCadastrarEquipamento("Equipamento Teste 123");
+            var executor = new ExecutorCadastrarEquipamento(new RepositorioEquipamentoFalso(Guid.NewGuid()));
             try
             {
                 executor.Executar(comandoValido);
@@ -28,46 +22,6 @@ namespace Locatudo.Testes.TestesExecutores
                 return;
             }
             Assert.IsTrue(true);
-        }
-
-        [TestMethod]
-        public void Departamento_invalido_deve_gerar_excecao()
-        {
-            var comandoInvalido = new ComandoAlterarGerenciadorEquipamento(_idEquipamentoValido, Guid.NewGuid());
-            var executor = new ExecutorAlterarGerenciadorEquipamento(
-                new RepositorioEquipamentoFalso(_idEquipamentoValido),
-                new RepositorioDepartamentoFalso(_idDepartamentoValido)
-                );
-            try
-            {
-                executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.IsTrue(false);
-        }
-
-        [TestMethod]
-        public void Equipamento_invalido_deve_gerar_excecao()
-        {
-            var comandoInvalido = new ComandoAlterarGerenciadorEquipamento(Guid.NewGuid(), _idDepartamentoValido);
-            var executor = new ExecutorAlterarGerenciadorEquipamento(
-                new RepositorioEquipamentoFalso(_idEquipamentoValido),
-                new RepositorioDepartamentoFalso(_idDepartamentoValido)
-                );
-            try
-            {
-                executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.IsTrue(false);
         }
     }
 }
