@@ -10,6 +10,11 @@ namespace Locatudo.Dominio.Entidades
         }
 
         public string Nome { get; private set; }
-        public Departamento? DepartamentoResponsavel { get; private set; }
+        public Departamento? Gerenciador { get; private set; }
+
+        public void AlterarGerenciador(Departamento gerenciador)
+        {
+            Gerenciador = gerenciador;
+        }
     }
 }
