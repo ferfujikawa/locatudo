@@ -1,10 +1,9 @@
 ﻿using Locatudo.Compartilhado.Entidades;
 using Locatudo.Compartilhado.ObjetosDeValor;
-using Locatudo.Compartilhado.ObjetosDeValor;
 
 namespace Locatudo.Dominio.Entidades
 {
-    public class Usuario : EntidadeAbstrata
+    public abstract class Usuario : EntidadeAbstrata
     {
         public Usuario(NomePessoaFisica nome, Email email) : base()
         {
