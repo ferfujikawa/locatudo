@@ -26,7 +26,7 @@ namespace Locatudo.Dominio.Entidades
             {
                 Situacao = new SituacaoLocacao(ESituacaoLocacao.Aprovado);
                 Aprovador = aprovador;
-                return false;
+                return true;
             }
             return false;
         }

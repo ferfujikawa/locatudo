@@ -5,7 +5,7 @@ namespace Locatudo.Testes.Repositorios
 {
     public class RepositorioEquipamentoFalso : IRepositorioEquipamento
     {
-        private readonly Guid _idValido = Guid.NewGuid();
+        private readonly Guid _idValido;
 
         public RepositorioEquipamentoFalso(Guid idValido)
         {

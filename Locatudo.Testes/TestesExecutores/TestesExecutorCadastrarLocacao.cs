@@ -28,9 +28,9 @@ namespace Locatudo.Testes.TestesExecutores
             {
                 _executor.Executar(comandoValido);
             }
-            catch
+            catch (Exception ex)
             {
-                Assert.IsTrue(false);
+                Assert.IsTrue(false, ex.Message);
                 return;
             }
             Assert.IsTrue(true);
