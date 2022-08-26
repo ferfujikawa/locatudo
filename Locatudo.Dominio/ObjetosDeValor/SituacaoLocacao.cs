@@ -4,11 +4,11 @@ namespace Locatudo.Dominio.ObjetosDeValor
 {
     public class SituacaoLocacao
     {
-        public SituacaoLocacao(ESituacaoLocacao situacao)
+        public SituacaoLocacao(ESituacaoLocacao valor)
         {
-            Situacao = situacao;
+            Valor = valor;
         }
 
-        public ESituacaoLocacao Situacao { get; private set; }
+        public ESituacaoLocacao Valor { get; private set; }
     }
 }
