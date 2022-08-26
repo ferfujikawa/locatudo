@@ -1,5 +1,5 @@
 ﻿using Locatudo.Dominio.Entidades;
-using Locatudo.Dominio.ObjetosDeValor;
+using Locatudo.Compartilhado.ObjetosDeValor;
 using Locatudo.Dominio.Repositorios;
 
 namespace Locatudo.Testes.Repositorios

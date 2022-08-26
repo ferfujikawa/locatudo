@@ -1,4 +1,4 @@
-﻿namespace Locatudo.Dominio.ObjetosDeValor
+﻿namespace Locatudo.Compartilhado.ObjetosDeValor
 {
     public class HorarioLocacao
     {

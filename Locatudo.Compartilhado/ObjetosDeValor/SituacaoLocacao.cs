@@ -1,6 +1,6 @@
-﻿using Locatudo.Dominio.Enumeradores;
+﻿using Locatudo.Compartilhado.Enumeradores;
 
-namespace Locatudo.Dominio.ObjetosDeValor
+namespace Locatudo.Compartilhado.ObjetosDeValor
 {
     public class SituacaoLocacao
     {
