@@ -1,7 +1,6 @@
 ﻿using Locatudo.Compartilhado.Entidades;
 using Locatudo.Compartilhado.Enumeradores;
 using Locatudo.Compartilhado.ObjetosDeValor;
-using System.Linq;
 
 namespace Locatudo.Dominio.Entidades
 {
