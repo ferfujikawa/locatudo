@@ -7,10 +7,14 @@ namespace Locatudo.Testes.Repositorios
     public class RepositorioLocacaoFalso : IRepositorioLocacao
     {
         private readonly Guid _idValido;
+        private readonly HorarioLocacao _horarioDisponivel;
 
-        public RepositorioLocacaoFalso(Guid idValido)
+        public RepositorioLocacaoFalso(
+            Guid idValido,
+            DateTime inicioDisponivel)
         {
             _idValido = idValido;
+            _horarioDisponivel = new HorarioLocacao(inicioDisponivel);
         }
 
         public void Alterar(Locacao entidade)
@@ -46,6 +50,11 @@ namespace Locatudo.Testes.Repositorios
                 );
             var horario = new HorarioLocacao(DateTime.Now);
             return new Locacao(equipamento, locatario, horario);
+        }
+
+        public bool VerificarDisponibilidade(Guid idEquipamento, HorarioLocacao horarioLocacao)
+        {
+            return horarioLocacao.Inicio == _horarioDisponivel.Inicio;
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Locatudo.Testes.TestesExecutores
     public class TestesExecutorCadastrarLocacao
     {
         private readonly Guid _idEquipamentoValido = Guid.NewGuid();
-        private readonly Guid _idUsuarioValido= Guid.NewGuid();
+        private readonly Guid _idUsuarioValido = Guid.NewGuid();
+        private readonly DateTime _dataDisponivel = DateTime.Now.AddHours(1);
         private readonly ExecutorCadastrarLocacao _executor;
 
         public TestesExecutorCadastrarLocacao()
@@ -16,14 +17,14 @@ namespace Locatudo.Testes.TestesExecutores
             _executor = new ExecutorCadastrarLocacao(
                 new RepositorioEquipamentoFalso(_idEquipamentoValido),
                 new RepositorioUsuarioFalso(_idUsuarioValido),
-                new RepositorioLocacaoFalso(Guid.NewGuid())
+                new RepositorioLocacaoFalso(Guid.NewGuid(), _dataDisponivel)
                 );
         }
 
         [TestMethod]
         public void Comando_valido_deve_cadastrar_locacao()
         {
-            var comandoValido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(1));
+            var comandoValido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, _dataDisponivel);
             try
             {
                 _executor.Executar(comandoValido);
@@ -39,7 +40,7 @@ namespace Locatudo.Testes.TestesExecutores
         [TestMethod]
         public void Equipamento_invalido_deve_gerar_excecao()
         {
-            var comandoInvalido = new ComandoCadastrarLocacao(Guid.NewGuid(), _idUsuarioValido, DateTime.Now.AddHours(1));
+            var comandoInvalido = new ComandoCadastrarLocacao(Guid.NewGuid(), _idUsuarioValido, _dataDisponivel);
             try
             {
                 _executor.Executar(comandoInvalido);
@@ -55,7 +56,7 @@ namespace Locatudo.Testes.TestesExecutores
         [TestMethod]
         public void Locador_invalido_deve_gerar_excecao()
         {
-            var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, Guid.NewGuid(), DateTime.Now.AddHours(1));
+            var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, Guid.NewGuid(), _dataDisponivel);
             try
             {
                 _executor.Executar(comandoInvalido);
@@ -72,6 +73,22 @@ namespace Locatudo.Testes.TestesExecutores
         public void Data_invalida_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(-1));
+            try
+            {
+                _executor.Executar(comandoInvalido);
+            }
+            catch
+            {
+                Assert.IsTrue(true);
+                return;
+            }
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Data_indisponivel_deve_gerar_excecao()
+        {
+            var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(2));
             try
             {
                 _executor.Executar(comandoInvalido);

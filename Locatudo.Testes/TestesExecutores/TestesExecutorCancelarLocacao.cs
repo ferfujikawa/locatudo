@@ -12,7 +12,7 @@ namespace Locatudo.Testes.TestesExecutores
 
         public TestesExecutorCancelarLocacao()
         {
-            _executor = new ExecutorCancelarLocacao(new RepositorioLocacaoFalso(_idLocacaoValida));
+            _executor = new ExecutorCancelarLocacao(new RepositorioLocacaoFalso(_idLocacaoValida, DateTime.Now));
         }
 
         [TestMethod]

@@ -14,7 +14,7 @@ namespace Locatudo.Testes.TestesExecutores
         public TestesExecutorReprovarLocacao()
         {
             _executor = new ExecutorReprovarLocacao(
-                new RepositorioLocacaoFalso(_idLocacaoValida),
+                new RepositorioLocacaoFalso(_idLocacaoValida, DateTime.Now),
                 new RepositorioFuncionarioFalso(_idAprovadorValido)
                 );
         }

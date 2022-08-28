@@ -25,6 +25,7 @@ namespace Locatudo.Dominio.Executores
         public void Executar(ComandoCadastrarLocacao comando)
         {
             var equipamento = _repositorioEquipamento.ObterPorId(comando.IdEquipamento);
+            var horarioLocacao = new HorarioLocacao(comando.Inicio);
             if (equipamento == null)
                 throw new Exception("Equipamento não encontrado");
 
@@ -32,10 +33,13 @@ namespace Locatudo.Dominio.Executores
             if (locatario == null)
                 throw new Exception("Usuário não encontrado");
 
-            if (comando.Inicio < DateTime.Now)
+            if (horarioLocacao.Inicio < DateTime.Now)
                 throw new Exception("Início não pode ser no passado");
 
-            var locacao = new Locacao(equipamento, locatario, new HorarioLocacao(comando.Inicio));
+            if (_repositorioLocacao.VerificarDisponibilidade(comando.IdEquipamento, horarioLocacao) == false)
+                throw new Exception("Horário de locação indisponível");
+
+            var locacao = new Locacao(equipamento, locatario, horarioLocacao);
             _repositorioLocacao.Criar(locacao);
         }
     }
