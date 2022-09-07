@@ -41,64 +41,40 @@ namespace Locatudo.Testes.TestesExecutores
         public void Equipamento_invalido_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(Guid.NewGuid(), _idUsuarioValido, _dataDisponivel);
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var excecao = Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Equipamento não encontrado", excecao.Message);
         }
 
         [TestMethod]
         public void Locador_invalido_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, Guid.NewGuid(), _dataDisponivel);
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var excecao = Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Usuário não encontrado", excecao.Message);
         }
 
         [TestMethod]
         public void Data_invalida_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(-1));
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var excecao = Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Início não pode ser no passado", excecao.Message);
         }
 
         [TestMethod]
         public void Data_indisponivel_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(2));
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var excecao = Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Horário de locação indisponível", excecao.Message);
         }
     }
 }

@@ -39,32 +39,20 @@ namespace Locatudo.Testes.TestesExecutores
         public void Locacao_invalida_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoAprovarLocacao(Guid.NewGuid(), _idAprovadorValido);
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var mensagem = Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Locacação não encontrada.", mensagem.Message);
         }
 
         [TestMethod]
         public void Aprovador_invalido_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoAprovarLocacao(_idLocacaoValida, Guid.NewGuid());
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var mensagem = Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Funcionário não encontrado.", mensagem.Message);
         }
     }
 }

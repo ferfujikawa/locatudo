@@ -1,6 +1,7 @@
 ﻿using Locatudo.Dominio.Executores;
 using Locatudo.Dominio.Executores.Comandos;
 using Locatudo.Testes.Repositorios;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 namespace Locatudo.Testes.TestesExecutores
 {
@@ -38,16 +39,10 @@ namespace Locatudo.Testes.TestesExecutores
                 new RepositorioEquipamentoFalso(_idEquipamentoValido),
                 new RepositorioDepartamentoFalso(_idDepartamentoValido)
                 );
-            try
-            {
-                executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var mensagem = Assert.ThrowsException<Exception>(
+                () => executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Departamento não encontrado", mensagem.Message);
         }
 
         [TestMethod]
@@ -58,16 +53,10 @@ namespace Locatudo.Testes.TestesExecutores
                 new RepositorioEquipamentoFalso(_idEquipamentoValido),
                 new RepositorioDepartamentoFalso(_idDepartamentoValido)
                 );
-            try
-            {
-                executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            var mensagem = Assert.ThrowsException<Exception>(
+                () => executor.Executar(comandoInvalido)
+            );
+            Assert.AreEqual("Equipamento não encontrado", mensagem.Message);
         }
     }
 }
