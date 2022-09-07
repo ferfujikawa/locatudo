@@ -38,16 +38,9 @@ namespace Locatudo.Testes.TestesExecutores
                 new RepositorioEquipamentoFalso(_idEquipamentoValido),
                 new RepositorioDepartamentoFalso(_idDepartamentoValido)
                 );
-            try
-            {
-                executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => executor.Executar(comandoInvalido)
+            );
         }
 
         [TestMethod]
@@ -58,16 +51,9 @@ namespace Locatudo.Testes.TestesExecutores
                 new RepositorioEquipamentoFalso(_idEquipamentoValido),
                 new RepositorioDepartamentoFalso(_idDepartamentoValido)
                 );
-            try
-            {
-                executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => executor.Executar(comandoInvalido)
+            );
         }
     }
 }

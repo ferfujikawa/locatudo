@@ -41,64 +41,36 @@ namespace Locatudo.Testes.TestesExecutores
         public void Equipamento_invalido_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(Guid.NewGuid(), _idUsuarioValido, _dataDisponivel);
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
         }
 
         [TestMethod]
         public void Locador_invalido_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, Guid.NewGuid(), _dataDisponivel);
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
         }
 
         [TestMethod]
         public void Data_invalida_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(-1));
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
         }
 
         [TestMethod]
         public void Data_indisponivel_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCadastrarLocacao(_idEquipamentoValido, _idUsuarioValido, DateTime.Now.AddHours(2));
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
         }
     }
 }

@@ -35,16 +35,9 @@ namespace Locatudo.Testes.TestesExecutores
         public void Locacao_invalida_deve_gerar_excecao()
         {
             var comandoInvalido = new ComandoCancelarLocacao(Guid.NewGuid());
-            try
-            {
-                _executor.Executar(comandoInvalido);
-            }
-            catch
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(
+                () => _executor.Executar(comandoInvalido)
+            );
         }
     }
 }
