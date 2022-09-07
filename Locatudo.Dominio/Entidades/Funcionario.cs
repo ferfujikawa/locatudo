@@ -10,5 +10,10 @@ namespace Locatudo.Dominio.Entidades
         }
 
         public Departamento Lotacao { get; private set; }
+
+        public void AlterarLotacao(Departamento departamento)
+        {
+            Lotacao = departamento;
+        }
     }
 }
