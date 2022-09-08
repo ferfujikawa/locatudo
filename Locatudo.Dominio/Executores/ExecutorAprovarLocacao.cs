@@ -25,7 +25,10 @@ namespace Locatudo.Dominio.Executores
 
             var locacao = _repositorioLocacao.ObterPorId(comando.IdLocacao);
             if (locacao == null)
-                throw new Exception("Locacação não encontrada.");
+                throw new Exception("Locação não encontrada.");
+
+            if (aprovador.Lotacao.Id != locacao.Equipamento.Gerenciador?.Id)
+                throw new Exception("Aprovador não está lotado no departamento gerenciador do equipamento.");
 
             if (locacao.Aprovar(aprovador) == false)
                 throw new Exception("A situação atual da locação não permite aprovação.");

@@ -1,6 +1,10 @@
-﻿using Locatudo.Dominio.Executores;
+﻿using AutoFixture;
+using AutoFixture.AutoMoq;
+using Locatudo.Dominio.Entidades;
+using Locatudo.Dominio.Executores;
 using Locatudo.Dominio.Executores.Comandos;
-using Locatudo.Testes.Repositorios;
+using Locatudo.Dominio.Repositorios;
+using Moq;
 
 namespace Locatudo.Testes.TestesExecutores
 {
@@ -12,7 +16,28 @@ namespace Locatudo.Testes.TestesExecutores
 
         public TestesExecutorCancelarLocacao()
         {
-            _executor = new ExecutorCancelarLocacao(new RepositorioLocacaoFalso(_idLocacaoValida, DateTime.Now));
+            //Criação do objeto fixture
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+
+            //Injeção de dependências
+            ConfigurarRepositorioLocacaoMock(fixture);
+
+            _executor = fixture.Create<ExecutorCancelarLocacao>();
+        }
+
+        private void ConfigurarRepositorioLocacaoMock(IFixture fixture)
+        {
+            //Injeção de dependência do tipo Usuario para criação da classe Locacao
+            fixture.Inject<Usuario>(fixture.Create<Funcionario>());
+
+            //Dependência de ExecutorReprovarLocacao
+            var repositorioLocacaoMock = fixture.Freeze<Mock<IRepositorioLocacao>>();
+
+            //Setup de retorno de locação válida com id conhecido
+            repositorioLocacaoMock.Setup(x => x.ObterPorId(_idLocacaoValida)).Returns(fixture.Create<Locacao>());
+
+            //Setup de retorno null com id qualquer
+            repositorioLocacaoMock.Setup(x => x.ObterPorId(It.Is<Guid>(x => x != _idLocacaoValida))).Returns((Locacao?)null);
         }
 
         [TestMethod]
@@ -38,7 +63,7 @@ namespace Locatudo.Testes.TestesExecutores
             var excecao = Assert.ThrowsException<Exception>(
                 () => _executor.Executar(comandoInvalido)
             );
-            Assert.AreEqual("Locacação não encontrada.", excecao.Message);
+            Assert.AreEqual("Locação não encontrada.", excecao.Message);
         }
     }
 }

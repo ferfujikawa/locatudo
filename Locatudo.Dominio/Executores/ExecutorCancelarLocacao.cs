@@ -17,7 +17,7 @@ namespace Locatudo.Dominio.Executores
         {
             var locacao = _repositorioLocacao.ObterPorId(comando.IdLocacao);
             if (locacao == null)
-                throw new Exception("Locacação não encontrada.");
+                throw new Exception("Locação não encontrada.");
 
             if (locacao.Cancelar() == false)
                 throw new Exception("A situação atual da locação não permite cancelamento.");
