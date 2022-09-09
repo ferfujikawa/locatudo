@@ -33,7 +33,7 @@ namespace Locatudo.Testes.TestesExecutores
             var repositorioEquipamento = fixture.Freeze<Mock<IRepositorioEquipamento>>();
 
             //Setup de retorno de equipamento válido com id conhecido
-            repositorioEquipamento.Setup(x => x.ObterPorId(_idEquipamentoValido)).Returns(fixture.Create<Equipamento>());
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(fixture.Create<Equipamento>());
 
             //Setup de retorno null com id qualquer
             repositorioEquipamento.Setup(x => x.ObterPorId(It.Is<Guid>(x => x != _idEquipamentoValido))).Returns((Equipamento?)null);
@@ -45,7 +45,7 @@ namespace Locatudo.Testes.TestesExecutores
             var repositorioDepartamento = fixture.Freeze<Mock<IRepositorioDepartamento>>();
 
             //Setup de retorno de departamento válido com id conhecido
-            repositorioDepartamento.Setup(x => x.ObterPorId(_idDepartamentoValido)).Returns(fixture.Create<Departamento>());
+            repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(fixture.Create<Departamento>());
 
             //Setup de retorno null com id qualquer
             repositorioDepartamento.Setup(x => x.ObterPorId(It.Is<Guid>(x => x != _idDepartamentoValido))).Returns((Departamento?)null);

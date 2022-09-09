@@ -57,7 +57,7 @@ namespace Locatudo.Testes.TestesExecutores
             var repositorioFuncionario = fixture.Freeze<Mock<IRepositorioFuncionario>>();
             
             //Setup de retorno de funcionário válido com id conhecido
-            repositorioFuncionario.Setup(x => x.ObterPorId(_idAprovadorValido)).Returns(aprovador);
+            repositorioFuncionario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(aprovador);
 
             //Setup de retorno null com id qualquer
             repositorioFuncionario.Setup(x => x.ObterPorId(It.Is<Guid>(x => x != _idAprovadorValido))).Returns((Funcionario?)null);
@@ -69,7 +69,7 @@ namespace Locatudo.Testes.TestesExecutores
             var repositorioLocacaoMock = fixture.Freeze<Mock<IRepositorioLocacao>>();
 
             //Setup de retorno de locação válida com id conhecido
-            repositorioLocacaoMock.Setup(x => x.ObterPorId(_idLocacaoValida)).Returns(locacao);
+            repositorioLocacaoMock.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(locacao);
 
             //Setup de retorno null com id qualquer
             repositorioLocacaoMock.Setup(x => x.ObterPorId(It.Is<Guid>(x => x != _idLocacaoValida))).Returns((Locacao?)null);

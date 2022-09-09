@@ -34,7 +34,7 @@ namespace Locatudo.Testes.TestesExecutores
             var repositorioLocacaoMock = fixture.Freeze<Mock<IRepositorioLocacao>>();
 
             //Setup de retorno de locação válida com id conhecido
-            repositorioLocacaoMock.Setup(x => x.ObterPorId(_idLocacaoValida)).Returns(fixture.Create<Locacao>());
+            repositorioLocacaoMock.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(fixture.Create<Locacao>());
 
             //Setup de retorno null com id qualquer
             repositorioLocacaoMock.Setup(x => x.ObterPorId(It.Is<Guid>(x => x != _idLocacaoValida))).Returns((Locacao?)null);
