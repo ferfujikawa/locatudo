@@ -14,7 +14,7 @@ Projeto classlib contendo interfaces, classes abstratas, objetos de valor e enum
 
 ## 1.3 Locatudo.Testes
 
-Projeto mstest contendo teste de unidade para as implementações realizadas no projeto **Locatudo.Domain**.
+Projeto mstest contendo teste de unidade para as implementações realizadas no projeto **Locatudo.Domain**, utilizando *AutoFixture* e *Moq*.
 
 ## 2 Próximos passos
 
