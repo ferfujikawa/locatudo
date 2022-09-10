@@ -11,9 +11,14 @@ namespace Locatudo.Dominio.Testes.Executores
         public void Comando_Valido_CadastrarEquipamento(
             ExecutorCadastrarEquipamento executor)
         {
+            //Arrange
             var comandoValido = new ComandoCadastrarEquipamento("Equipamento Teste 123");
+
+            //Act
             var acao = () => executor.Executar(comandoValido);
-            acao.Should().NotThrow<Exception>();
+
+            //Assert
+            acao.Should().NotThrow();
         }
     }
 }
