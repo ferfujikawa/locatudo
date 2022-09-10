@@ -11,6 +11,8 @@ namespace Locatudo.Dominio.Testes.Executores
 {
     public class TesteExecutorAlterarGerenciadorEquipamento
     {
+        private readonly ComandoAlterarGerenciadorEquipamento _comandoValido = new (Guid.NewGuid(), Guid.NewGuid());
+
         [Theory, AutoMoq]
         public void Comando_Valido_AlterarGerenciadorEquipamento(
             [Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
@@ -22,10 +24,10 @@ namespace Locatudo.Dominio.Testes.Executores
             //Arrange
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento.Object);
             repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(departamento.Object);
-            var comandoValido = new ComandoAlterarGerenciadorEquipamento(Guid.NewGuid(), Guid.NewGuid());
+            
 
             //Act
-            var acao = () => executor.Executar(comandoValido);
+            var acao = () => executor.Executar(_comandoValido);
 
             //Assert
             acao.Should().NotThrow();
