@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locatudo.Dominio", "Locatud
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locatudo.Testes", "Locatudo.Testes\Locatudo.Testes.csproj", "{B81E1C6C-416B-472A-A7BF-3293693EA89C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locatudo.Dominio.Testes", "Locatudo.Dominio.Testes\Locatudo.Dominio.Testes.csproj", "{D195ABAE-E688-46F2-B8A5-F711AE934099}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{B81E1C6C-416B-472A-A7BF-3293693EA89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B81E1C6C-416B-472A-A7BF-3293693EA89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B81E1C6C-416B-472A-A7BF-3293693EA89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D195ABAE-E688-46F2-B8A5-F711AE934099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D195ABAE-E688-46F2-B8A5-F711AE934099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D195ABAE-E688-46F2-B8A5-F711AE934099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D195ABAE-E688-46F2-B8A5-F711AE934099}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
