@@ -22,21 +22,22 @@ namespace Locatudo.Testes.TestesExecutores
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
             //Criação de Mocks
-            var departamento = fixture.Create<Departamento>();
-            var equipamento = fixture.Create<Equipamento>();
-            equipamento.AlterarGerenciador(departamento);
-            var locatario = fixture.Create<Terceirizado>();
-            var locacao = CarregarLocacaoMock(fixture, equipamento, locatario);
-
+            var locacao = CarregarLocacaoMock(fixture);
+            
             //Injeção de dependências
             ConfigurarRepositorioLocacaoMock(fixture, locacao);
-            ConfigurarRepositorioFuncionarioMock(fixture, departamento);
+            ConfigurarRepositorioFuncionarioMock(fixture, locacao.Equipamento.Gerenciador ?? fixture.Create<Departamento>());
 
             _executor = fixture.Create<ExecutorAprovarLocacao>();
         }
 
-        private Locacao CarregarLocacaoMock(IFixture fixture, Equipamento equipamento, Terceirizado locatario)
+        private Locacao CarregarLocacaoMock(IFixture fixture)
         {
+            //Criação de Mocks para construtor de Locacao
+            var equipamento = fixture.Create<Equipamento>();
+            equipamento.AlterarGerenciador(fixture.Create<Departamento>());
+            var locatario = fixture.Create<Terceirizado>();
+
             //Criação de HorarioLocacao válido
             fixture.Customize<HorarioLocacao>(x => x.FromFactory(() => new HorarioLocacao(DateTime.Now)));
             var horario = fixture.Create<HorarioLocacao>();
