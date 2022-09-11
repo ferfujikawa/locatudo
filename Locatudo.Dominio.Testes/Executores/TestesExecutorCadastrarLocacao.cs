@@ -24,11 +24,16 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Criação de mocks
             var equipamento = fixture.Create<Equipamento>();
             var terceirizado = fixture.Create<Terceirizado>();
+
+            //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
@@ -46,10 +51,15 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Criação de mocks
             var terceirizado = fixture.Create<Terceirizado>();
+
+            //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Equipamento?) null);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
@@ -67,10 +77,15 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Criação de mocks
             var equipamento = fixture.Create<Equipamento>();
+
+            //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Terceirizado?) null);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
@@ -88,11 +103,16 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Criação de mocks
             var equipamento = fixture.Create<Equipamento>();
             var terceirizado = fixture.Create<Terceirizado>();
+
+            //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
@@ -110,11 +130,16 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Criação de mocks
             var equipamento = fixture.Create<Equipamento>();
             var terceirizado = fixture.Create<Terceirizado>();
+
+            //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(false);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act

@@ -21,10 +21,15 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioDepartamento> repositorioDepartamento)
         {
             //Arrange
+            //Criação de mocks
             var equipamento = fixture.Create<Equipamento>();
             var departamento = fixture.Create<Departamento>();
+
+            //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(departamento);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorAlterarGerenciadorEquipamento>();
 
             //Act

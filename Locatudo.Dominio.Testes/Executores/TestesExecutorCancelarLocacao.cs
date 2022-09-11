@@ -20,8 +20,13 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Resolução de dependência de classe abstrata Usuario
             fixture.Inject<Usuario>(fixture.Create<Funcionario>());
+
+            //Setup de retornos de métodos dos repositórios
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(fixture.Create<Locacao>());
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCancelarLocacao>();
 
             //Act
@@ -37,7 +42,10 @@ namespace Locatudo.Dominio.Testes.Executores
             [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            //Setup de retornos de métodos dos repositórios
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Locacao?)null);
+
+            //Criação do mock do executor
             var executor = fixture.Create<ExecutorCancelarLocacao>();
 
             //Act
