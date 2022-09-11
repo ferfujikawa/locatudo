@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using AutoFixture;
+using AutoFixture.Xunit2;
 using FluentAssertions;
 using Locatudo.Compartilhado.ObjetosDeValor;
 using Locatudo.Dominio.Entidades;
@@ -17,17 +18,18 @@ namespace Locatudo.Dominio.Testes.Executores
 
         [Theory, AutoMoq]
         public void Comando_Valido_CadastrarLocacao(
+            IFixture fixture,
             [Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
             [Frozen] Mock<IRepositorioUsuario> repositorioUsuario,
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            Mock<Equipamento> equipamento,
-            Mock<Terceirizado> terceirizado,
-            ExecutorCadastrarLocacao executor)
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
-            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento.Object);
-            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado.Object);
+            var equipamento = fixture.Create<Equipamento>();
+            var terceirizado = fixture.Create<Terceirizado>();
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
+            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+            var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
             var acao = () => executor.Executar(_comandoValido);
@@ -37,16 +39,18 @@ namespace Locatudo.Dominio.Testes.Executores
         }
 
         [Theory, AutoMoq]
-        public void Comando_EquipamentoInvalido_GerarExcecao([Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
+        public void Comando_EquipamentoInvalido_GerarExcecao(
+            IFixture fixture,
+            [Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
             [Frozen] Mock<IRepositorioUsuario> repositorioUsuario,
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            Mock<Terceirizado> terceirizado,
-            ExecutorCadastrarLocacao executor)
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
+            var terceirizado = fixture.Create<Terceirizado>();
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Equipamento?) null);
-            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado.Object);
+            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+            var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
             var acao = () => executor.Executar(_comandoValido);
@@ -57,16 +61,17 @@ namespace Locatudo.Dominio.Testes.Executores
 
         [Theory, AutoMoq]
         public void Comando_LocadorInvalido_GerarExcecao(
+            IFixture fixture,
             [Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
             [Frozen] Mock<IRepositorioUsuario> repositorioUsuario,
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            Mock<Equipamento> equipamento,
-            ExecutorCadastrarLocacao executor)
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
-            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento.Object);
+            var equipamento = fixture.Create<Equipamento>();
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Terceirizado?) null);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+            var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
             var acao = () => executor.Executar(_comandoValido);
@@ -77,17 +82,18 @@ namespace Locatudo.Dominio.Testes.Executores
 
         [Theory, AutoMoq]
         public void Comando_InicioPassado_GerarExcecao(
+            IFixture fixture,
             [Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
             [Frozen] Mock<IRepositorioUsuario> repositorioUsuario,
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            Mock<Equipamento> equipamento,
-            Mock<Terceirizado> terceirizado,
-            ExecutorCadastrarLocacao executor)
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
-            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento.Object);
-            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado.Object);
+            var equipamento = fixture.Create<Equipamento>();
+            var terceirizado = fixture.Create<Terceirizado>();
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
+            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
+            var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
             var acao = () => executor.Executar(_comandoInicioPassado);
@@ -98,17 +104,18 @@ namespace Locatudo.Dominio.Testes.Executores
 
         [Theory, AutoMoq]
         public void Comando_DataIndisponivel_GerarExcecao(
+            IFixture fixture,
             [Frozen] Mock<IRepositorioEquipamento> repositorioEquipamento,
             [Frozen] Mock<IRepositorioUsuario> repositorioUsuario,
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            Mock<Equipamento> equipamento,
-            Mock<Terceirizado> terceirizado,
-            ExecutorCadastrarLocacao executor)
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
-            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento.Object);
-            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado.Object);
+            var equipamento = fixture.Create<Equipamento>();
+            var terceirizado = fixture.Create<Terceirizado>();
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
+            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(false);
+            var executor = fixture.Create<ExecutorCadastrarLocacao>();
 
             //Act
             var acao = () => executor.Executar(_comandoValido);

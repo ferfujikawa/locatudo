@@ -12,19 +12,20 @@ namespace Locatudo.Dominio.Testes.Executores
 {
     public class TestesExecutorCancelarLocacao
     {
+        private readonly ComandoCancelarLocacao _comandoValido = new (Guid.NewGuid());
+
         [Theory, AutoMoq]
         public void Comando_Valido_AprovarLocacao(
             IFixture fixture,
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            ExecutorCancelarLocacao executor)
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
             fixture.Inject<Usuario>(fixture.Create<Funcionario>());
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(fixture.Create<Locacao>());
-            var comandoValido = new ComandoCancelarLocacao(Guid.NewGuid());
+            var executor = fixture.Create<ExecutorCancelarLocacao>();
 
             //Act
-            var acao = () => executor.Executar(comandoValido);
+            var acao = () => executor.Executar(_comandoValido);
 
             //Assert
             acao.Should().NotThrow();
@@ -32,15 +33,15 @@ namespace Locatudo.Dominio.Testes.Executores
 
         [Theory, AutoMoq]
         public void Locacao_Invalida_GerarExcecao(
-            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao,
-            ExecutorCancelarLocacao executor)
+            IFixture fixture,
+            [Frozen] Mock<IRepositorioLocacao> repositorioLocacao)
         {
             //Arrange
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Locacao?)null);
-            var comandoInvalido = new ComandoCancelarLocacao(Guid.NewGuid());
+            var executor = fixture.Create<ExecutorCancelarLocacao>();
 
             //Act
-            var acao = () => executor.Executar(comandoInvalido);
+            var acao = () => executor.Executar(_comandoValido);
 
             //Assert
             acao.Should().Throw<Exception>("Locação não encontrada.");

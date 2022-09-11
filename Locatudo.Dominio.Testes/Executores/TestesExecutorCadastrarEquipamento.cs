@@ -2,20 +2,22 @@
 using Locatudo.Dominio.Executores.Comandos;
 using Locatudo.Dominio.Testes.Customizacoes;
 using FluentAssertions;
+using AutoFixture;
 
 namespace Locatudo.Dominio.Testes.Executores
 {
     public class TestesExecutorCadastrarEquipamento
     {
+        private readonly ComandoCadastrarEquipamento _comandoValido = new ("Equipamento Teste 123");
+
         [Theory, AutoMoq]
-        public void Comando_Valido_CadastrarEquipamento(
-            ExecutorCadastrarEquipamento executor)
+        public void Comando_Valido_CadastrarEquipamento(IFixture fixture)
         {
             //Arrange
-            var comandoValido = new ComandoCadastrarEquipamento("Equipamento Teste 123");
+            var executor = fixture.Create<ExecutorCadastrarEquipamento>();
 
             //Act
-            var acao = () => executor.Executar(comandoValido);
+            var acao = () => executor.Executar(_comandoValido);
 
             //Assert
             acao.Should().NotThrow();
