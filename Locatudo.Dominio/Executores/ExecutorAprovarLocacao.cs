@@ -27,7 +27,7 @@ namespace Locatudo.Dominio.Executores
             if (locacao == null)
                 throw new Exception("Locação não encontrada.");
 
-            if (aprovador.Lotacao.Id != locacao.Equipamento.Gerenciador?.Id)
+            if (locacao.PodeSerAprovadaReprovadaPor(aprovador) == false)
                 throw new Exception("Aprovador não está lotado no departamento gerenciador do equipamento.");
 
             if (locacao.Aprovar(aprovador) == false)

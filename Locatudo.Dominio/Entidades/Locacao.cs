@@ -51,5 +51,10 @@ namespace Locatudo.Dominio.Entidades
             }
             return false;
         }
+
+        public bool PodeSerAprovadaReprovadaPor(Funcionario funcionario)
+        {
+            return funcionario.Lotacao.Id == Equipamento.Gerenciador?.Id;
+        }
     }
 }
