@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
+using Locatudo.Compartilhado.Enumeradores;
 using Locatudo.Dominio.Entidades;
 using Locatudo.Dominio.Executores;
 using Locatudo.Dominio.Executores.Comandos;
@@ -12,8 +13,6 @@ namespace Locatudo.Dominio.Testes.Executores
 {
     public class TestesExecutorCancelarLocacao
     {
-        private readonly ComandoCancelarLocacao _comandoValido = new (Guid.NewGuid());
-
         [Theory, AutoMoq]
         public void Comando_Valido_AprovarLocacao(
             IFixture fixture,
@@ -23,17 +22,22 @@ namespace Locatudo.Dominio.Testes.Executores
             //Resolução de dependência de classe abstrata Usuario
             fixture.Inject<Usuario>(fixture.Create<Funcionario>());
 
-            //Setup de retornos de métodos dos repositórios
-            repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(fixture.Create<Locacao>());
+            //Criação de mocks
+            var locacao = fixture.Create<Locacao>();
 
-            //Criação do mock do executor
+            //Setup de retornos de métodos dos repositórios
+            repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(locacao);
+
+            //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorCancelarLocacao>();
+            var comando = new ComandoCancelarLocacao(locacao.Id);
 
             //Act
-            var acao = () => executor.Executar(_comandoValido);
+            var acao = () => executor.Executar(comando);
 
             //Assert
             acao.Should().NotThrow();
+            locacao.Situacao.Valor.Should().Be(ESituacaoLocacao.Cancelado, "Ao cancelar a locação, a situação deve ser alterada para Cancelado");
         }
 
         [Theory, AutoMoq]
@@ -45,11 +49,12 @@ namespace Locatudo.Dominio.Testes.Executores
             //Setup de retornos de métodos dos repositórios
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Locacao?)null);
 
-            //Criação do mock do executor
+            //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorCancelarLocacao>();
+            var comando = new ComandoCancelarLocacao(Guid.NewGuid());
 
             //Act
-            var acao = () => executor.Executar(_comandoValido);
+            var acao = () => executor.Executar(comando);
 
             //Assert
             acao.Should().Throw<Exception>("Locação não encontrada.");
