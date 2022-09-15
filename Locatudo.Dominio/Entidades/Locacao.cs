@@ -1,5 +1,4 @@
 ﻿using Locatudo.Compartilhado.Entidades;
-using Locatudo.Compartilhado.Enumeradores;
 using Locatudo.Compartilhado.ObjetosDeValor;
 
 namespace Locatudo.Dominio.Entidades
@@ -10,7 +9,7 @@ namespace Locatudo.Dominio.Entidades
         {
             Equipamento = equipamento;
             Locatario = locatario;
-            Situacao = new SituacaoLocacao(ESituacaoLocacao.Solicitado);
+            Situacao = new SituacaoLocacao();
             Horario = horario;
         }
 
@@ -22,9 +21,8 @@ namespace Locatudo.Dominio.Entidades
 
         public bool Aprovar(Funcionario aprovador)
         {
-            if (Situacao.Valor == ESituacaoLocacao.Solicitado)
+            if (Situacao.AlterarParaAprovado())
             {
-                Situacao = new SituacaoLocacao(ESituacaoLocacao.Aprovado);
                 Aprovador = aprovador;
                 return true;
             }
@@ -32,9 +30,8 @@ namespace Locatudo.Dominio.Entidades
         }
         public bool Reprovar(Funcionario aprovador)
         {
-            if (Situacao.Valor == ESituacaoLocacao.Solicitado)
+            if (Situacao.AlterarParaReprovado())
             {
-                Situacao = new SituacaoLocacao(ESituacaoLocacao.Reprovado);
                 Aprovador = aprovador;
                 return true;
             }
@@ -43,13 +40,7 @@ namespace Locatudo.Dominio.Entidades
 
         public bool Cancelar()
         {
-            ESituacaoLocacao[] situacoesPossiveis = { ESituacaoLocacao.Solicitado, ESituacaoLocacao.Aprovado };
-            if (situacoesPossiveis.Contains(Situacao.Valor))
-            {
-                Situacao = new SituacaoLocacao(ESituacaoLocacao.Cancelado);
-                return true;
-            }
-            return false;
+            return Situacao.AlterarParaCancelado();
         }
 
         public bool PodeSerAprovadaReprovadaPor(Funcionario funcionario)

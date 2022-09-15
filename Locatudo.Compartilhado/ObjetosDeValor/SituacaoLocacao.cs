@@ -4,11 +4,40 @@ namespace Locatudo.Compartilhado.ObjetosDeValor
 {
     public class SituacaoLocacao
     {
-        public SituacaoLocacao(ESituacaoLocacao valor)
+        public ESituacaoLocacao Valor { get; private set; }
+        public SituacaoLocacao()
         {
-            Valor = valor;
+            Valor = ESituacaoLocacao.Solicitado;
         }
 
-        public ESituacaoLocacao Valor { get; private set; }
+        public bool AlterarParaAprovado()
+        {
+            if (Valor == ESituacaoLocacao.Solicitado)
+            {
+                Valor = ESituacaoLocacao.Aprovado;
+                return true;
+            }
+            return false;
+        }
+        public bool AlterarParaReprovado()
+        {
+            if (Valor == ESituacaoLocacao.Solicitado)
+            {
+                Valor = ESituacaoLocacao.Reprovado;
+                return true;
+            }
+            return false;
+        }
+
+        public bool AlterarParaCancelado()
+        {
+            ESituacaoLocacao[] situacoesPossiveis = { ESituacaoLocacao.Solicitado, ESituacaoLocacao.Aprovado };
+            if (situacoesPossiveis.Contains(Valor))
+            {
+                Valor = ESituacaoLocacao.Cancelado;
+                return true;
+            }
+            return false;
+        }
     }
 }
