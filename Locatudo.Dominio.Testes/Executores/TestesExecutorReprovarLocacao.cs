@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
+using Locatudo.Compartilhado.Enumeradores;
 using Locatudo.Compartilhado.ObjetosDeValor;
 using Locatudo.Dominio.Entidades;
 using Locatudo.Dominio.Executores;
@@ -13,8 +14,6 @@ namespace Locatudo.Dominio.Testes.Executores
 {
     public class TestesExecutorReprovarLocacao
     {
-        private readonly ComandoReprovarLocacao _comandoValido = new (Guid.NewGuid(), Guid.NewGuid());
-
         [Theory, AutoMoq]
         public void Comando_Valido_ReprovarLocacao(
             IFixture fixture,
@@ -42,14 +41,20 @@ namespace Locatudo.Dominio.Testes.Executores
             repositorioFuncionario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(aprovador);
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(locacao);
 
-            //Criação do mock do executor
+            //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorReprovarLocacao>();
+            var comando = new ComandoReprovarLocacao(locacao.Id, aprovador.Id);
 
             //Act
-            var acao = () => executor.Executar(_comandoValido);
+            var acao = () => executor.Executar(comando);
 
             //Assert
             acao.Should().NotThrow();
+            locacao.Situacao.Valor.Should().Be(ESituacaoLocacao.Reprovado, "Porque ao reprovar a locação, a situação deve ser alterada para Reprovado");
+            locacao.Aprovador
+                .Should().NotBeNull("Porque ao reprovar a locação, precisa registrar quem é o aprovador")
+                .And.BeOfType<Funcionario>("Porque somente um funcionário pode reprovar uma locação")
+                .Which.Id.Should().Be(comando.IdAprovador, "Porque o reprovar da locação precisa ser o mesmo cujo Id foi passado no comando");
         }
 
         [Theory, AutoMoq]
@@ -65,11 +70,12 @@ namespace Locatudo.Dominio.Testes.Executores
             repositorioFuncionario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(aprovador);
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Locacao?)null);
 
-            //Criação do mock do executor
+            //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorReprovarLocacao>();
+            var comando = new ComandoReprovarLocacao(Guid.NewGuid(), aprovador.Id);
 
             //Act
-            var acao = () => executor.Executar(_comandoValido);
+            var acao = () => executor.Executar(comando);
 
             //Assert
             acao.Should().Throw<Exception>("Locação não encontrada.");
@@ -91,11 +97,12 @@ namespace Locatudo.Dominio.Testes.Executores
             repositorioFuncionario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Funcionario?)null);
             repositorioLocacao.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(locacao);
 
-            //Criação do mock do executor
+            //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorReprovarLocacao>();
+            var comando = new ComandoReprovarLocacao(locacao.Id, Guid.NewGuid());
 
             //Act
-            var acao = () => executor.Executar(_comandoValido);
+            var acao = () => executor.Executar(comando);
 
             //Assert
             acao.Should().Throw<Exception>("Funcionário não encontrado.");
