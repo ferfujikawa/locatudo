@@ -12,8 +12,6 @@ namespace Locatudo.Dominio.Testes.Executores
 {
     public class TesteExecutorAlterarGerenciadorEquipamento
     {
-        private readonly ComandoAlterarGerenciadorEquipamento _comandoValido = new (Guid.NewGuid(), Guid.NewGuid());
-
         [Theory, AutoMoq]
         public void Comando_Valido_AlterarGerenciadorEquipamento(
             IFixture fixture,
@@ -29,14 +27,17 @@ namespace Locatudo.Dominio.Testes.Executores
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
             repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(departamento);
 
-            //Criação do mock do executor
+            //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorAlterarGerenciadorEquipamento>();
+            var comando = new ComandoAlterarGerenciadorEquipamento(equipamento.Id, departamento.Id);
 
             //Act
-            var acao = () => executor.Executar(_comandoValido);
+            var acao = () => executor.Executar(comando);
 
             //Assert
             acao.Should().NotThrow();
+            equipamento.Gerenciador
+                .Should().Match<Departamento>(x => x.Id == departamento.Id, "O departamento gerenciador do equipamento precisa ser o mesmo cujo Id foi passado no comando");
         }
     }
 }

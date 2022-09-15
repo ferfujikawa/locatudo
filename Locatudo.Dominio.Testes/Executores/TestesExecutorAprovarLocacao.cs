@@ -50,11 +50,11 @@ namespace Locatudo.Dominio.Testes.Executores
 
             //Assert
             acao.Should().NotThrow();
-            locacao.Situacao.Valor.Should().Be(ESituacaoLocacao.Aprovado, "Porque ao aprovar a locação, a situação deve ser alterada para Aprovado");
+            locacao.Situacao.Valor.Should().Be(ESituacaoLocacao.Aprovado, "Ao aprovar a locação, a situação deve ser alterada para Aprovado");
             locacao.Aprovador
-                .Should().NotBeNull("Porque ao aprovar a locação, precisa registrar quem é o aprovador")
-                .And.BeOfType<Funcionario>("Porque somente um funcionário pode aprovar uma locação")
-                .Which.Id.Should().Be(comando.IdAprovador, "Porque o aprovador da locação precisa ser o mesmo cujo Id foi passado no comando");
+                .Should().NotBeNull("Ao aprovar a locação, precisa registrar quem é o aprovador")
+                .And.BeOfType<Funcionario>("Somente um funcionário pode aprovar uma locação")
+                .Which.Id.Should().Be(comando.IdAprovador, "O aprovador da locação precisa ser o mesmo cujo Id foi passado no comando");
         }
 
         [Theory, AutoMoq]
