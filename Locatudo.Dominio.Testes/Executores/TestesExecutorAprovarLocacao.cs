@@ -79,7 +79,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(comando);
 
             //Assert
-            acao.Should().Throw<Exception>("Locação não encontrada.");
+            acao.Should().Throw<Exception>("A aprovação de uma locação inexistente não pode ser realizada");
         }
 
         [Theory, AutoMoq]
@@ -107,7 +107,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(comando);
 
             //Assert
-            acao.Should().Throw<Exception>("Funcionário não encontrado.");
+            acao.Should().Throw<Exception>("A aprovação de uma locação não pode ser realizada por um funcionário inexistente");
         }
     }
 }

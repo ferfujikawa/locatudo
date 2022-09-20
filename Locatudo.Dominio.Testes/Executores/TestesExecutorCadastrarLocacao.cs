@@ -66,7 +66,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(_comandoValido);
 
             //Assert
-            acao.Should().Throw<Exception>("Equipamento não encontrado");
+            acao.Should().Throw<Exception>("A locação de um equipamento inexistente não pode ser realizada");
         }
 
         [Theory, AutoMoq]
@@ -92,7 +92,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(_comandoValido);
 
             //Assert
-            acao.Should().Throw<Exception>("Usuário não encontrado");
+            acao.Should().Throw<Exception>("A locação de um equipamento não pode ser realizada para um usuário inexistente");
         }
 
         [Theory, AutoMoq]
@@ -119,7 +119,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(_comandoInicioPassado);
 
             //Assert
-            acao.Should().Throw<Exception>("Início não pode ser no passado");
+            acao.Should().Throw<Exception>("A locação de um equipamento não pode ser realizada para um horário no passado");
         }
 
         [Theory, AutoMoq]
@@ -146,7 +146,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(_comandoValido);
 
             //Assert
-            acao.Should().Throw<Exception>("Horário de locação indisponível");
+            acao.Should().Throw<Exception>("A locação de um equipamento não pode ser realizada para um horário indisponível");
         }
     }
 }

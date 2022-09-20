@@ -57,7 +57,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var acao = () => executor.Executar(comando);
 
             //Assert
-            acao.Should().Throw<Exception>("Locação não encontrada.");
+            acao.Should().Throw<Exception>("O cancelamento de uma locação inexistente não pode ser realizado");
         }
     }
 }
